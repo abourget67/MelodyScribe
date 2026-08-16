@@ -50,3 +50,12 @@ samples/*.ogg
 **/separated/
 **/pitch_analysis/
 **/note_segmentation/
+
+# Terraform local state and provider cache
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
