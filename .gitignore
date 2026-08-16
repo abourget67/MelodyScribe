@@ -18,6 +18,10 @@ lib64/
 parts/
 sdist/
 var/
+
+# Audio files (large, regenerate locally)
+samples/separated/*.wav
+samples/sample.mp3
 wheels/
 *.egg-info/
 .installed.cfg
@@ -41,3 +45,8 @@ samples/*.m4a
 samples/*.flac
 samples/*.ogg
 !samples/README.md
+
+# Pipeline outputs (created beside the input audio)
+**/separated/
+**/pitch_analysis/
+**/note_segmentation/
