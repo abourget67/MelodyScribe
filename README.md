@@ -32,6 +32,9 @@ Extract vocal melody → detect pitch → segment notes → generate MusicXML/MI
 - [x] Support standard notation software (MuseScore, Finale, Dorico)
 - [x] End-to-end pipeline complete
 
+### Milestone 6: PDF Sheet Music ✓
+- [x] Render MusicXML output as PDF sheet music
+
 ## Project Structure
 
 ```
@@ -144,6 +147,17 @@ Output:
 
 Generated file:
 - `note_segmentation/sample_vocals_notes.musicxml` - MusicXML notation (compatible with MuseScore, Finale, Dorico, etc.)
+
+### Render PDF sheet music
+```bash
+python3 main.py convert-pdf ../samples/separated/sample_vocals.wav
+```
+
+This final phase renders the MusicXML output from the previous phase as a PDF:
+
+- `note_segmentation/sample_vocals_notes.pdf` - Printable sheet music
+
+PDF rendering requires [MuseScore](https://musescore.org/) (or another MusicXML renderer) to be installed and configured for `music21`.
 
 ## Installation
 

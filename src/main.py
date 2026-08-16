@@ -17,7 +17,8 @@ def print_usage():
     print("  python main.py separate <path_to_audio>         # Extract vocals")
     print("  python main.py detect-pitch <path_to_audio>     # Detect pitch from vocals")
     print("  python main.py segment-notes <path_to_audio>    # Segment pitch into notes")
-    print("  python main.py convert-musicxml <path_to_audio> # Convert notes to MusicXML\n")
+    print("  python main.py convert-musicxml <path_to_audio> # Convert notes to MusicXML")
+    print("  python main.py convert-pdf <path_to_audio>      # Render MusicXML as PDF sheet music\n")
     print("Supported formats: MP3, WAV, M4A, FLAC, OGG\n")
 
 
@@ -126,6 +127,14 @@ def main():
             converter = MusicXMLConverter()
             output_musicxml = Path(audio_file).parent / "note_segmentation" / f"{Path(audio_file).stem}_notes.musicxml"
             converter.convert_json_to_musicxml(str(notes_json), str(output_musicxml))
+
+        elif command == "convert-pdf":
+            output_dir = Path(audio_file).parent / "note_segmentation"
+            musicxml_path = output_dir / f"{Path(audio_file).stem}_notes.musicxml"
+            pdf_path = output_dir / f"{Path(audio_file).stem}_notes.pdf"
+
+            converter = MusicXMLConverter()
+            converter.convert_musicxml_to_pdf(str(musicxml_path), str(pdf_path))
         
         else:
             print(f"❌ Unknown command: {command}")

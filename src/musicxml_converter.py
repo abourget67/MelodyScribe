@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import List
 from dataclasses import dataclass
 
+from music21 import converter as music21_converter
 from music21 import stream, instrument, meter, tempo, note, metadata
 
 
@@ -148,6 +149,26 @@ class MusicXMLConverter:
         """
         score.write('musicxml', fp=output_path)
         print(f"✅ Saved MusicXML: {Path(output_path).name}")
+
+    def save_pdf(self, score: stream.Score, output_path: str) -> None:
+        """Render a score as a PDF sheet-music file.
+
+        music21 delegates PDF rendering to a configured notation application,
+        such as MuseScore.
+        """
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            score.write('musicxml.pdf', fp=str(output_path))
+        except Exception as error:
+            raise RuntimeError(
+                "Unable to render PDF sheet music. Install MuseScore and "
+                "configure it as music21's MusicXML renderer. "
+                f"Details: {error}"
+            ) from error
+
+        print(f"✅ Saved PDF sheet music: {output_path.name}")
     
     def convert_json_to_musicxml(
         self,
@@ -177,6 +198,25 @@ class MusicXMLConverter:
         # Save MusicXML
         self.save_musicxml(score, output_path)
         print(f"✅ MusicXML conversion complete!")
+
+    def convert_musicxml_to_pdf(self, musicxml_path: str, output_path: str) -> None:
+        """Render an existing MusicXML output file as PDF sheet music.
+
+        Args:
+            musicxml_path: Path to the MusicXML file from the prior phase.
+            output_path: Path for the generated PDF file.
+        """
+        musicxml_path = Path(musicxml_path)
+        if not musicxml_path.exists():
+            raise FileNotFoundError(
+                f"MusicXML output not found: {musicxml_path}. "
+                "Run convert-musicxml first."
+            )
+
+        print("🎼 Rendering PDF sheet music...")
+        score = music21_converter.parse(str(musicxml_path))
+        self.save_pdf(score, output_path)
+        print("✅ PDF conversion complete!")
     
     def convert_midi_to_musicxml(
         self,
