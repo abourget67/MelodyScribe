@@ -1,4 +1,4 @@
-# MelodyScribe
+# PitchCraft
 
 A Mac application for extracting lead vocal melody from audio files and generating MusicXML and MIDI.
 
@@ -38,7 +38,7 @@ Extract vocal melody → detect pitch → segment notes → generate MusicXML/MI
 ## Project Structure
 
 ```
-MelodyScribe/
+PitchCraft/
 ├── src/
 │   ├── __init__.py
 │   ├── audio_loader.py      # Audio file loading utilities
@@ -51,6 +51,13 @@ MelodyScribe/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
+
+## Web frontend
+
+The browser interface lives in [`frontend/`](frontend/). It is a static website that calls the PitchCraft backend over an HTTP API; it never invokes the Python command line directly.
+
+The interface runs in demo mode until an API URL is added near the top of `frontend/app.js`. See [`frontend/README.md`](frontend/README.md) for the API contract and deployment checklist.
 
 ## Usage
 

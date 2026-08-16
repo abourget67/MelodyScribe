@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Turn a vocal recording into editable sheet music and MIDI." />
+    <title>PitchCraft — Hear it. See it. Shape it.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="PitchCraft home">
+        <span class="brand-mark" aria-hidden="true">♪</span>
+        <span>PitchCraft</span>
+      </a>
+      <a class="quiet-link" href="#how-it-works">How it works</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Audio to notation</p>
+          <h1 id="hero-title">Hear it. <em>See it.</em><br />Shape it.</h1>
+          <p class="hero-description">
+            Upload a song or vocal recording. PitchCraft finds the lead melody and turns it into MIDI and editable sheet music.
+          </p>
+        </div>
+
+        <div class="upload-card" id="upload-card">
+          <form id="upload-form" novalidate>
+            <input id="audio-file" name="audio" type="file" accept="audio/*,.mp3,.wav,.m4a,.flac,.ogg" hidden />
+            <button class="drop-zone" id="drop-zone" type="button">
+              <span class="upload-icon" aria-hidden="true">↥</span>
+              <span class="drop-title">Drop your audio here</span>
+              <span class="drop-subtitle">or click to choose a file</span>
+              <span class="file-types">MP3, WAV, M4A, FLAC or OGG · up to 50 MB</span>
+            </button>
+
+            <div class="selected-file" id="selected-file" hidden>
+              <span class="file-note" aria-hidden="true">♫</span>
+              <span class="file-details">
+                <strong id="file-name"></strong>
+                <span id="file-size"></span>
+              </span>
+              <button class="remove-file" id="remove-file" type="button" aria-label="Remove selected file">×</button>
+            </div>
+
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button class="primary-button" id="submit-button" type="submit" disabled>
+              Transcribe melody
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="privacy-note">
+            <span aria-hidden="true">◇</span>
+            <span>Your audio is used only to create your transcription and is deleted after processing.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="process-panel" id="process-panel" aria-live="polite" hidden>
+        <div class="process-heading">
+          <div>
+            <p class="eyebrow">Working on it</p>
+            <h2 id="process-title">Finding the melody…</h2>
+          </div>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+        <ol class="process-steps" id="process-steps">
+          <li data-step="upload">Uploading audio</li>
+          <li data-step="separate">Separating vocals</li>
+          <li data-step="detect">Detecting pitch</li>
+          <li data-step="transcribe">Writing notes</li>
+        </ol>
+        <button class="text-button" id="cancel-button" type="button">Cancel</button>
+      </section>
+
+      <section class="results" id="results" aria-labelledby="results-title" hidden>
+        <div class="results-heading">
+          <div>
+            <p class="eyebrow">Your transcription</p>
+            <h2 id="results-title">Melody ready</h2>
+            <p id="result-summary">We found the notes in your recording.</p>
+          </div>
+          <button class="secondary-button" id="start-over" type="button">Transcribe another</button>
+        </div>
+
+        <div class="player-card">
+          <div class="player-controls">
+            <button class="play-button" id="play-button" type="button" aria-label="Play melody">▶</button>
+            <div class="timeline-wrap">
+              <div class="time-labels"><span id="current-time">0:00</span><span id="total-time">0:00</span></div>
+              <input id="timeline" class="timeline" type="range" min="0" max="1000" value="0" aria-label="Playback position" />
+            </div>
+            <label class="sound-picker">
+              <span>Sound</span>
+              <select id="sound-select">
+                <option value="piano">Soft piano</option>
+                <option value="bell">Bell</option>
+                <option value="organ">Organ</option>
+                <option value="synth">Warm synth</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="piano-roll-shell">
+            <div class="piano-roll" id="piano-roll" aria-label="Visual preview of detected notes"></div>
+          </div>
+
+          <div class="result-meta">
+            <span><strong id="note-count">0</strong> notes</span>
+            <span><strong id="duration-label">0:00</strong> duration</span>
+            <span><strong id="range-label">—</strong> range</span>
+          </div>
+        </div>
+
+        <div class="downloads">
+          <a class="download-card" id="midi-download" href="#" download>
+            <span class="download-type">MIDI</span>
+            <span><strong>Download MIDI</strong><small>For Logic, Ableton, GarageBand and more</small></span>
+            <span class="download-arrow" aria-hidden="true">↓</span>
+          </a>
+          <a class="download-card" id="musicxml-download" href="#" download>
+            <span class="download-type">XML</span>
+            <span><strong>Download sheet music</strong><small>For MuseScore, Finale, Dorico and more</small></span>
+            <span class="download-arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="how-it-works" id="how-it-works" aria-labelledby="how-title">
+        <p class="eyebrow">Simple by design</p>
+        <h2 id="how-title">From recording to notes in three steps.</h2>
+        <div class="steps-grid">
+          <article><span>01</span><h3>Upload</h3><p>Choose a song or a clear vocal recording from your device.</p></article>
+          <article><span>02</span><h3>Transcribe</h3><p>PitchCraft isolates the voice and identifies each note.</p></article>
+          <article><span>03</span><h3>Play & export</h3><p>Preview the melody, then download MIDI or editable notation.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>PitchCraft</span><span>Made for musicians.</span></footer>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

@@ -74,7 +74,7 @@ class MusicXMLConverter:
         self,
         notes: List[Note],
         title: str = "Vocal Melody",
-        composer: str = "MelodyScribe",
+        composer: str = "PitchCraft",
         time_signature: tuple = (4, 4)
     ) -> stream.Score:
         """
@@ -175,7 +175,7 @@ class MusicXMLConverter:
         json_path: str,
         output_path: str,
         title: str = "Vocal Melody",
-        composer: str = "MelodyScribe"
+        composer: str = "PitchCraft"
     ) -> None:
         """
         Convert JSON note file directly to MusicXML.
@@ -223,7 +223,7 @@ class MusicXMLConverter:
         midi_path: str,
         output_path: str,
         title: str = "Vocal Melody",
-        composer: str = "MelodyScribe"
+        composer: str = "PitchCraft"
     ) -> None:
         """
         Convert MIDI file to MusicXML.

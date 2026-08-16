@@ -1,4 +1,4 @@
-"""MelodyScribe - Main entry point."""
+"""PitchCraft - Main entry point."""
 
 import sys
 from pathlib import Path
@@ -11,7 +11,7 @@ from musicxml_converter import MusicXMLConverter
 
 def print_usage():
     """Print usage information."""
-    print("\nMelodyScribe - Vocal Melody Extraction\n")
+    print("\nPitchCraft - Vocal Melody Extraction\n")
     print("Usage:")
     print("  python main.py info <path_to_audio>              # Show audio metadata")
     print("  python main.py separate <path_to_audio>         # Extract vocals")
@@ -23,7 +23,7 @@ def print_usage():
 
 
 def main():
-    """Main entry point for MelodyScribe."""
+    """Main entry point for PitchCraft."""
     
     if len(sys.argv) < 3:
         print_usage()
