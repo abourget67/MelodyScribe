@@ -45,6 +45,7 @@ samples/*.m4a
 samples/*.flac
 samples/*.ogg
 !samples/README.md
+*.plan
 
 # Pipeline outputs (created beside the input audio)
 **/separated/
@@ -59,3 +60,4 @@ samples/*.ogg
 !*.tfvars.example
 crash.log
 crash.*.log
+*.plan
